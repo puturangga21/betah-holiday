@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 
 import { nephilm, openSans, plusJakartaSans } from '@/lib/fonts';
 
+import Navbar from '@/components/layout/navbar';
+
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -17,7 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${nephilm.variable} ${plusJakartaSans.variable} ${openSans.variable} antialiased`}>
+        className={`${nephilm.variable} ${plusJakartaSans.variable} ${openSans.variable} relative antialiased`}>
+        <Navbar />
         {children}
       </body>
     </html>
