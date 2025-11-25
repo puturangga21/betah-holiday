@@ -7,16 +7,16 @@ export default function Home() {
         <Container className="space-y-14">
           {/* hero */}
           <div className="flex h-screen items-center justify-center">
-            <div className="flex flex-col items-center justify-center gap-12 text-center">
-              <div className="flex flex-col gap-2">
-                <span className="text-xl font-medium text-white uppercase">
+            <div className="flex flex-col items-center justify-center gap-6 text-center md:gap-12">
+              <div className="flex flex-col gap-1 md:gap-2">
+                <span className="text-base font-medium text-white uppercase md:text-xl">
                   Discover Your Next
                 </span>
-                <h1 className="text-9xl font-bold text-white uppercase">
+                <h1 className="text-5xl font-bold text-white uppercase md:text-9xl">
                   ADVENTURE
                 </h1>
               </div>
-              <span className="max-w-[572px] text-base text-white">
+              <span className="max-w-[572px] text-sm text-white md:text-base">
                 Experience the magic of exploring the Bali most breathtaking
                 destinations with our custom designed travel packages for every
                 adventurer.

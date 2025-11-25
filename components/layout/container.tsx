@@ -2,7 +2,7 @@ import React from 'react';
 
 type ContainerProps = {
   children: React.ReactNode;
-  className?: string; // Supaya bisa tambah class custom jika perlu
+  className?: string;
 };
 
 export default function Container({
