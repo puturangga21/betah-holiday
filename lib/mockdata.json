@@ -1,0 +1,344 @@
+{
+  "destinations": [
+    {
+      "id": "dest_ubud",
+      "name": "Ubud",
+      "slug": "ubud",
+      "description": "The cultural heart of Bali, known for traditional crafts, dance, and lush rice paddies.",
+      "imageUrl": "/images/destinations/ubud-cover.jpg"
+    },
+    {
+      "id": "dest_uluwatu",
+      "name": "Uluwatu",
+      "slug": "uluwatu",
+      "description": "Famous for its cliffside temple, stunning sunsets, and the iconic Kecak fire dance.",
+      "imageUrl": "/images/destinations/uluwatu-cover.jpg"
+    },
+    {
+      "id": "dest_kintamani",
+      "name": "Kintamani",
+      "slug": "kintamani",
+      "description": "Highland area offering spectacular views of the active Mount Batur volcano and serene Lake Batur.",
+      "imageUrl": "/images/destinations/kintamani-cover.jpg"
+    },
+    {
+      "id": "dest_nusa_penida",
+      "name": "Nusa Penida",
+      "slug": "nusa-penida",
+      "description": "An exotic island southeast of Bali known for its dinosaur-shaped cliffs and pristine beaches.",
+      "imageUrl": "/images/destinations/nusa-penida-cover.jpg"
+    },
+    {
+      "id": "dest_seminyak",
+      "name": "Seminyak",
+      "slug": "seminyak",
+      "description": "Bali's upscale beach resort area, home to luxury hotels, villas, and vibrant beach clubs.",
+      "imageUrl": "/images/destinations/seminyak-cover.jpg"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat_adrenaline",
+      "name": "Adrenaline"
+    },
+    {
+      "id": "cat_culture",
+      "name": "Culture & Heritage"
+    },
+    {
+      "id": "cat_nature",
+      "name": "Nature & Wildlife"
+    },
+    {
+      "id": "cat_walking",
+      "name": "Walking Tours"
+    },
+    {
+      "id": "cat_water",
+      "name": "Water Activities"
+    }
+  ],
+  "activities": [
+    {
+      "id": "act_001",
+      "title": "Ubud Quad Biking: The Real Jungle Bali ATV Ride",
+      "slug": "ubud-quad-biking-atv",
+      "description": "Sense exhilarating adventure deep into the verdant jungle with ATV. Experience the thrill of riding through the tropical landscape.",
+      "price": 800000,
+      "currency": "IDR",
+      "duration": "2 hours",
+      "meetingPoint": "Ubud ATV Basecamp",
+      "cancellationPolicy": "Cancel up to 24 hours in advance for a full refund",
+      "highlights": [
+        "Ride through gorilla face cave",
+        "Explore verdant rice fields",
+        "Pass through traditional villages",
+        "Shower and lunch facilities included"
+      ],
+      "whatToBring": [
+        "Change of clothes",
+        "Sunscreen",
+        "Comfortable shoes",
+        "Cash for personal expenses"
+      ],
+      "images": [
+        "/images/activities/atv-1.jpg",
+        "/images/activities/atv-2.jpg"
+      ],
+      "destinationId": "dest_ubud",
+      "categoryIds": [
+        "cat_adrenaline",
+        "cat_nature"
+      ]
+    },
+    {
+      "id": "act_002",
+      "title": "Telaga Waja Rafting + Spa Relaxation",
+      "slug": "telaga-waja-rafting-spa",
+      "description": "Begin with rafting on the Telaga Waja River, followed by relaxation at Bali Green SPA.",
+      "price": 800000,
+      "currency": "IDR",
+      "duration": "6 hours",
+      "meetingPoint": "Start Point Sobek Telaga Waja",
+      "cancellationPolicy": "Free cancellation up to 24 hours in advance",
+      "highlights": [
+        "White water rafting on Telaga Waja River",
+        "Buffet lunch with river view",
+        "1-hour Traditional Balinese Massage",
+        "Professional river guide"
+      ],
+      "whatToBring": [
+        "Swimsuit",
+        "Change of clothes",
+        "Waterproof camera",
+        "Sunscreen"
+      ],
+      "images": [
+        "/images/activities/rafting-1.jpg"
+      ],
+      "destinationId": "dest_ubud",
+      "categoryIds": [
+        "cat_adrenaline",
+        "cat_nature",
+        "cat_water"
+      ]
+    },
+    {
+      "id": "act_003",
+      "title": "Tirta Empul: Temple Tour with Spiritual Cleansing",
+      "slug": "tirta-empul-temple-tour",
+      "description": "Visit the sacred temple of Tirta Empul in Tampak Siring with a professional guide.",
+      "price": 390000,
+      "currency": "IDR",
+      "duration": "3 hours",
+      "meetingPoint": "Tirta Empul Ticket Office",
+      "cancellationPolicy": "Free cancellation",
+      "highlights": [
+        "Guided tour of Tirta Empul Temple",
+        "Optional Melukat (cleansing) ritual",
+        "Learn about Balinese Hindu traditions",
+        "Visit the presidential palace view"
+      ],
+      "whatToBring": [
+        "Sarong and sash",
+        "Change of clothes",
+        "Towel",
+        "Respectful clothing"
+      ],
+      "images": [
+        "/images/activities/tirta-empul.jpg"
+      ],
+      "destinationId": "dest_ubud",
+      "categoryIds": [
+        "cat_culture",
+        "cat_walking"
+      ]
+    },
+    {
+      "id": "act_005",
+      "title": "Uluwatu Sunset: Kecak Fire Dance & Temple Tour",
+      "slug": "uluwatu-kecak-fire-dance",
+      "description": "Witness the magical sunset at Uluwatu Temple followed by the legendary Kecak Fire Dance performance on the cliff edge.",
+      "price": 450000,
+      "currency": "IDR",
+      "duration": "4 hours",
+      "meetingPoint": "Uluwatu Temple Entrance",
+      "cancellationPolicy": "Cancel 24 hours before for refund",
+      "highlights": [
+        "Sunset view from 70-meter high cliff",
+        "Watch the epic Ramayana Kecak dance",
+        "Explore the sacred Uluwatu Temple",
+        "Meet the resident macaque monkeys"
+      ],
+      "whatToBring": [
+        "Camera",
+        "Sunglasses",
+        "Modest clothing (sarong provided)"
+      ],
+      "images": [
+        "/images/activities/kecak-dance.jpg",
+        "/images/activities/uluwatu-sunset.jpg"
+      ],
+      "destinationId": "dest_uluwatu",
+      "categoryIds": [
+        "cat_culture",
+        "cat_nature"
+      ]
+    },
+    {
+      "id": "act_006",
+      "title": "Mount Batur Sunrise Trekking",
+      "slug": "mount-batur-sunrise-trekking",
+      "description": "Hike up the sacred Mount Batur volcano in the dark to witness a breathtaking sunrise above the clouds.",
+      "price": 850000,
+      "currency": "IDR",
+      "duration": "8 hours",
+      "meetingPoint": "Hotel Pickup (Kuta/Ubud/Seminyak)",
+      "cancellationPolicy": "Free cancellation up to 48 hours",
+      "highlights": [
+        "Summit sunrise breakfast (eggs cooked in volcanic steam)",
+        "Professional trekking guide",
+        "Panoramic views of Lake Batur and Mt. Abang",
+        "Visit coffee plantation on the way back"
+      ],
+      "whatToBring": [
+        "Hiking shoes",
+        "Warm jacket (very cold at summit)",
+        "Headlamp (if not provided)",
+        "Camera"
+      ],
+      "images": [
+        "/images/activities/batur-trekking.jpg"
+      ],
+      "destinationId": "dest_kintamani",
+      "categoryIds": [
+        "cat_adrenaline",
+        "cat_nature",
+        "cat_walking"
+      ]
+    },
+    {
+      "id": "act_007",
+      "title": "Kintamani 4WD Jeep Sunrise Tour",
+      "slug": "kintamani-jeep-sunrise",
+      "description": "Explore the black lava fields of Mount Batur in a classic 4WD Jeep without the strenuous hiking.",
+      "price": 1200000,
+      "currency": "IDR",
+      "duration": "6 hours",
+      "meetingPoint": "Toyabungkah Village",
+      "cancellationPolicy": "Free cancellation up to 24 hours",
+      "highlights": [
+        "Off-road adventure on Black Lava",
+        "Sunrise view point from Jeep",
+        "Breakfast with volcano view",
+        "Hot spring soak option available"
+      ],
+      "whatToBring": [
+        "Jacket",
+        "Sunscreen",
+        "Sunglasses"
+      ],
+      "images": [
+        "/images/activities/batur-jeep.jpg"
+      ],
+      "destinationId": "dest_kintamani",
+      "categoryIds": [
+        "cat_adrenaline",
+        "cat_nature"
+      ]
+    },
+    {
+      "id": "act_008",
+      "title": "Best of Nusa Penida: Kelingking & Broken Beach",
+      "slug": "nusa-penida-west-tour",
+      "description": "Hop on a fast boat to explore the most instagrammable spots on Nusa Penida island.",
+      "price": 1100000,
+      "currency": "IDR",
+      "duration": "10 hours",
+      "meetingPoint": "Sanur Harbor",
+      "cancellationPolicy": "Non-refundable if cancelled within 24h",
+      "highlights": [
+        "Fast boat transfer return",
+        "Visit Kelingking Beach (T-Rex cliff)",
+        "Broken Beach & Angel's Billabong",
+        "Snorkeling at Crystal Bay"
+      ],
+      "whatToBring": [
+        "Swimsuit",
+        "Towel",
+        "Motion sickness medicine",
+        "Hat"
+      ],
+      "images": [
+        "/images/activities/kelingking-beach.jpg",
+        "/images/activities/broken-beach.jpg"
+      ],
+      "destinationId": "dest_nusa_penida",
+      "categoryIds": [
+        "cat_nature",
+        "cat_water",
+        "cat_walking"
+      ]
+    },
+    {
+      "id": "act_009",
+      "title": "Seminyak Beginner Surf Lesson",
+      "slug": "seminyak-surf-lesson",
+      "description": "Learn to surf in the gentle waves of Seminyak Beach with certified instructors. Perfect for first-timers.",
+      "price": 350000,
+      "currency": "IDR",
+      "duration": "2 hours",
+      "meetingPoint": "Seminyak Beach Rescue Post",
+      "cancellationPolicy": "Free cancellation",
+      "highlights": [
+        "1-on-1 or small group instruction",
+        "Rash guard and board rental included",
+        "Safety theory and beach practice",
+        "Photo analysis of your surfing"
+      ],
+      "whatToBring": [
+        "Swimsuit",
+        "Sunscreen (Zinc)",
+        "Towel",
+        "Water bottle"
+      ],
+      "images": [
+        "/images/activities/surfing-seminyak.jpg"
+      ],
+      "destinationId": "dest_seminyak",
+      "categoryIds": [
+        "cat_water",
+        "cat_adrenaline"
+      ]
+    },
+    {
+      "id": "act_010",
+      "title": "Traditional Balinese Cooking Class in Ubud",
+      "slug": "ubud-cooking-class",
+      "description": "Visit a local market to buy fresh ingredients and learn to cook authentic Balinese dishes in a traditional family compound.",
+      "price": 400000,
+      "currency": "IDR",
+      "duration": "4 hours",
+      "meetingPoint": "Ubud Market Entrance",
+      "cancellationPolicy": "Free cancellation",
+      "highlights": [
+        "Morning market tour",
+        "Learn to make Canang Sari (offerings)",
+        "Cook 7 traditional dishes",
+        "Lunch buffet of your own creation"
+      ],
+      "whatToBring": [
+        "Appetite",
+        "Camera",
+        "Notebook"
+      ],
+      "images": [
+        "/images/activities/cooking-class.jpg"
+      ],
+      "destinationId": "dest_ubud",
+      "categoryIds": [
+        "cat_culture"
+      ]
+    }
+  ]
+}
