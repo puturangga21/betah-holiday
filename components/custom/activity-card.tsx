@@ -1,16 +1,21 @@
-import React from 'react';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Activity } from '@/sanity.types';
+import {
+  QUERY_ACTIVITIESResult,
+  QUERY_POPULAR_ACTIVITIESResult,
+} from '@/sanity.types';
 import { urlFor } from '@/sanity/lib/image';
 import { ArrowRight } from 'lucide-react';
 
 import { Button } from '../ui/button';
 
+type ActivityData =
+  | QUERY_ACTIVITIESResult[0]
+  | QUERY_POPULAR_ACTIVITIESResult[0];
+
 interface PopularActivitesCardProps {
-  data: Activity;
+  data: ActivityData;
 }
 
 export default function ActivityCard({ data }: PopularActivitesCardProps) {

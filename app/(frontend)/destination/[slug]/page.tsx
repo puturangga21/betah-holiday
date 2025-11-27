@@ -1,7 +1,9 @@
-import React from 'react';
-import { notFound, redirect } from 'next/navigation'; // Import ini
-import mockData from '@/lib/mockdata.json';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+
+import mockData from '@/lib/mockdata.json';
+
+// Import ini
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -22,18 +24,24 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold">List activities in {destination.name}</h1>
+      <h1 className="text-2xl font-bold">
+        List activities in {destination.name}
+      </h1>
 
       <ul className="mt-4 space-y-4">
         {activities.length > 0 ? (
           activities.map((activity) => (
-            <li key={activity.id} className="border p-4 rounded hover:bg-gray-50">
-              <Link href={`/activity/${activity.slug}`} className="flex flex-col">
+            <li
+              key={activity.id}
+              className="rounded border p-4 hover:bg-gray-50">
+              <Link
+                href={`/activity/${activity.slug}`}
+                className="flex flex-col">
                 <span className="font-semibold">{activity.title}</span>
-                <span className="text-sm text-gray-600 line-clamp-2">
+                <span className="line-clamp-2 text-sm text-gray-600">
                   {activity.description}
                 </span>
-                <span className="text-green-600 mt-2">
+                <span className="mt-2 text-green-600">
                   Rp {activity.price.toLocaleString()}
                 </span>
               </Link>

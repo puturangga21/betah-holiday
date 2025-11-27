@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Activity } from '@/sanity.types';
+import { QUERY_POPULAR_ACTIVITIESResult } from '@/sanity.types';
 import Autoplay from 'embla-carousel-autoplay';
 
 import ActivityCard from '@/components/custom/activity-card';
@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/carousel';
 
 interface PopularActivitiesCarouselProps {
-  data: Activity[];
+  data: QUERY_POPULAR_ACTIVITIESResult;
 }
 
 export default function PopularActivitiesCarousel({

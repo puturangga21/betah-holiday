@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 
 import { nephilm, openSans, plusJakartaSans } from '@/lib/fonts';
 
-import Navbar from '@/components/layout/navbar';
-
 import './globals.css';
 
 export const metadata: Metadata = {

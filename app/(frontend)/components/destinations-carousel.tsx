@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Destination } from '@/sanity.types';
+import { QUERY_DESTINATIONSResult } from '@/sanity.types';
 import Autoplay from 'embla-carousel-autoplay';
 
 import DestinationCard from '@/components/custom/destination-card';
@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/carousel';
 
 interface DestinationCarouselProps {
-  data: Destination[];
+  data: QUERY_DESTINATIONSResult;
 }
 
 export default function DestinationsCarousel({

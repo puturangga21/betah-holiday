@@ -1,13 +1,11 @@
-import React from 'react';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Destination } from '@/sanity.types';
+import { QUERY_DESTINATIONSResult } from '@/sanity.types';
 import { urlFor } from '@/sanity/lib/image';
 
 interface DestinationCardProps {
-  data: Destination;
+  data: QUERY_DESTINATIONSResult[0];
 }
 
 export default function DestinationCard({ data }: DestinationCardProps) {
