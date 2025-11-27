@@ -1,29 +1,31 @@
-import { client } from '@/sanity/lib/client';
+import { defineQuery } from 'next-sanity';
 
-import ActivityCard, { Activity } from '@/components/custom/activity-card';
+import { sanityFetch } from '@/sanity/lib/live';
 
-const query = `
-  *[_type == 'activity'] | order(_createdAt desc) {
-  _id,
-  title,
-  "slug": slug.current,
-  price,
-  currency,
-  description,
-  "destination": destination->{
-    name,
+import ActivityCard from '@/components/custom/activity-card';
+
+const QUERY_ACTIVITIES = defineQuery(`
+    *[_type == 'activity'] | order(_createdAt desc) {
+    _id,
+    title,
     "slug": slug.current,
-    },
-  "categories": categories[]->{
-    name
-    },
-  "image": image[0]
-  }`;
-
-const options = { next: { revalidate: 30 } };
+    price,
+    currency,
+    description,
+    "destination": destination->{
+      name,
+      "slug": slug.current,
+      },
+    "categories": categories[]->{
+      name
+      },
+    "image": image[0]
+  }`);
 
 export default async function AllActivities() {
-  const activities = await client.fetch<Activity[]>(query, {}, options);
+  const { data: activities } = await sanityFetch({
+    query: QUERY_ACTIVITIES,
+  });
 
   return (
     <div className="space-y-4">
@@ -32,10 +34,10 @@ export default async function AllActivities() {
       </h1>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {activities.map((activities) => (
+        {activities.map((activity) => (
           <ActivityCard
-            data={activities}
-            key={activities._id}
+            data={activity}
+            key={activity._id}
           />
         ))}
       </div>

@@ -2,11 +2,10 @@
 
 import React from 'react';
 
+import { Destination } from '@/sanity.types';
 import Autoplay from 'embla-carousel-autoplay';
 
-import DestinationCard, {
-  Destination,
-} from '@/components/custom/destination-card';
+import DestinationCard from '@/components/custom/destination-card';
 import {
   Carousel,
   CarouselContent,

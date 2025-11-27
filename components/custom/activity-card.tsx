@@ -3,27 +3,11 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Activity } from '@/sanity.types';
 import { urlFor } from '@/sanity/lib/image';
 import { ArrowRight } from 'lucide-react';
 
 import { Button } from '../ui/button';
-
-export interface Activity {
-  _id: string;
-  title: string;
-  slug: string;
-  price: number;
-  currency: string;
-  description: string;
-  destination: {
-    name: string;
-    slug: string;
-  };
-  categories: Array<{
-    name: string;
-  }>;
-  image: string;
-}
 
 interface PopularActivitesCardProps {
   data: Activity;
@@ -36,8 +20,11 @@ export default function ActivityCard({ data }: PopularActivitesCardProps) {
       className="group relative block h-full w-full overflow-hidden rounded-2xl border-2">
       <div className="aspect-video h-[188px] w-full overflow-hidden">
         <Image
-          src={urlFor(data.image).width(600).height(400).url()}
-          alt={data.title}
+          src={urlFor(data.image ?? '/placeholder.png')
+            .width(600)
+            .height(400)
+            .url()}
+          alt={data.title || 'Activity Image'}
           width={600}
           height={400}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -64,7 +51,7 @@ export default function ActivityCard({ data }: PopularActivitesCardProps) {
                 style: 'currency',
                 currency: data.currency || 'IDR',
                 maximumFractionDigits: 0,
-              }).format(data.price)}
+              }).format(data.price ?? 0)}
             </span>
           </div>
         </div>

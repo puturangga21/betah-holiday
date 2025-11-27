@@ -1,22 +1,22 @@
-import { client } from '@/sanity/lib/client';
+import { defineQuery } from 'next-sanity';
 
-import { Destination } from '@/components/custom/destination-card';
+import { sanityFetch } from '@/sanity/lib/live';
 
 import DestinationsCarousel from './destinations-carousel';
 
-const query = `
-  *[_type == 'destination'] | order(_createdAt desc) {
-  _id,
-  name,
-  description,
-  "slug": slug.current,
-  image
-  }`;
-
-const options = { next: { revalidate: 30 } };
+const QUERY_DESTINATIONS = defineQuery(`
+    *[_type == 'destination'] | order(_createdAt desc) {
+    _id,
+    name,
+    description,
+    "slug": slug.current,
+    image
+  }`);
 
 export default async function Destinations() {
-  const destinations = await client.fetch<Destination[]>(query, {}, options);
+  const { data: destinations } = await sanityFetch({
+    query: QUERY_DESTINATIONS,
+  });
 
   return (
     <div

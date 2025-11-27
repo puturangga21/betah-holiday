@@ -2,9 +2,10 @@
 
 import React from 'react';
 
+import { Activity } from '@/sanity.types';
 import Autoplay from 'embla-carousel-autoplay';
 
-import ActivityCard, { Activity } from '@/components/custom/activity-card';
+import ActivityCard from '@/components/custom/activity-card';
 import {
   Carousel,
   CarouselContent,

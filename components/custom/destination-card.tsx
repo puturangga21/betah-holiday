@@ -3,15 +3,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Destination } from '@/sanity.types';
 import { urlFor } from '@/sanity/lib/image';
-
-export interface Destination {
-  _id: string;
-  name: string;
-  description: string;
-  slug: string;
-  image: string;
-}
 
 interface DestinationCardProps {
   data: Destination;
@@ -24,8 +17,11 @@ export default function DestinationCard({ data }: DestinationCardProps) {
       className="group relative block w-full overflow-hidden rounded-2xl">
       <div className="aspect-3/4 w-full overflow-hidden">
         <Image
-          src={urlFor(data.image).width(400).height(533).url()}
-          alt={data.name}
+          src={urlFor(data.image ?? '/placeholder.png')
+            .width(400)
+            .height(533)
+            .url()}
+          alt={data.name ?? 'Destination Image'}
           width={400}
           height={533}
           className="bg-muted h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"

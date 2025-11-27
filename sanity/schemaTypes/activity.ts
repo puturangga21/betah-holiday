@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from 'sanity';
 
 export default defineType({
   name: 'activity',
@@ -23,13 +23,13 @@ export default defineType({
       name: 'destination',
       title: 'Location / Destination',
       type: 'reference',
-      to: [{type: 'destination'}],
+      to: [{ type: 'destination' }],
     }),
     defineField({
       name: 'categories',
       title: 'Categories',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'category'}]}],
+      of: [{ type: 'reference', to: [{ type: 'category' }] }],
     }),
     defineField({
       name: 'description',
@@ -61,22 +61,16 @@ export default defineType({
       type: 'string',
     }),
     defineField({
-      name: 'cancellationPolicy',
-      title: 'Cancellation Policy',
-      type: 'text',
-      rows: 2,
-    }),
-    defineField({
       name: 'highlights',
       title: 'Highlights',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{ type: 'string' }],
     }),
     defineField({
       name: 'whatToBring',
       title: 'What To Bring',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{ type: 'string' }],
     }),
     defineField({
       name: 'image',
@@ -85,7 +79,7 @@ export default defineType({
       of: [
         {
           type: 'image',
-          options: {hotspot: true},
+          options: { hotspot: true },
         },
       ],
     }),
@@ -103,4 +97,4 @@ export default defineType({
       media: 'image.0',
     },
   },
-})
+});

@@ -1,31 +1,31 @@
-import { client } from '@/sanity/lib/client';
+import { defineQuery } from 'next-sanity';
 
-import { Activity } from '@/components/custom/activity-card';
+import { sanityFetch } from '@/sanity/lib/live';
 
 import PopularActivitiesCarousel from './popular-activities-carousel';
 
-const query = `
-  *[_type == 'activity' && isPopular == true] | order(_createdAt desc) [0...5] {
-  _id,
-  title,
-  "slug": slug.current,
-  price,
-  currency,
-  description,
-  "destination": destination->{
-    name,
+const QUERY_POPULAR_ACTIVITIES = defineQuery(`
+    *[_type == 'activity' && isPopular == true] | order(_createdAt desc) [0...5] {
+    _id,
+    title,
     "slug": slug.current,
-    },
-  "categories": categories[]->{
-    name
-    },
-  "image": image[0],
-  }`;
-
-const options = { next: { revalidate: 30 } };
+    price,
+    currency,
+    description,
+    "destination": destination->{
+      name,
+      "slug": slug.current,
+      },
+    "categories": categories[]->{
+      name
+      },
+    "image": image[0],
+  }`);
 
 export default async function PopularActivities() {
-  const activities = await client.fetch<Activity[]>(query, {}, options);
+  const { data: activities } = await sanityFetch({
+    query: QUERY_POPULAR_ACTIVITIES,
+  });
 
   return (
     <div

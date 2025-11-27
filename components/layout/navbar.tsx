@@ -40,7 +40,7 @@ export default function Navbar() {
       // We animate the background to white and text to green/primary
       tl.current
         .to(containerRef.current, {
-          backgroundColor: '#ffffff',
+          backgroundColor: '#f8f5f0',
           borderBottomColor: '#e0d6c9',
           duration: 0.3,
           ease: 'power2.out',
@@ -94,7 +94,9 @@ export default function Navbar() {
     <nav
       ref={containerRef}
       className={`fixed top-0 z-50 w-full border-b transition-colors duration-300 ${
-        isTransparent ? 'border-b-transparent bg-transparent' : 'border-b'
+        isTransparent
+          ? 'border-b-transparent bg-transparent'
+          : 'bg-background border-b'
       }`}>
       <Container className="py-4 lg:py-8">
         <div className="flex items-center justify-between">
@@ -150,7 +152,7 @@ export default function Navbar() {
       {/* MOBILE MENU DROPDOWN */}
       <div
         ref={menuContainerRef}
-        className="absolute top-full left-0 h-0 w-full overflow-hidden bg-white lg:hidden"
+        className="bg-background absolute top-full left-0 h-0 w-full overflow-hidden lg:hidden"
         style={{ willChange: 'height, opacity' }}>
         <div className="flex h-screen flex-col items-start justify-between gap-6 border-t px-4 pt-4 pb-8 sm:px-6 lg:px-8">
           <ul className="flex w-full flex-col items-start gap-2">

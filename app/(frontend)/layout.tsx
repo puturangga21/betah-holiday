@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { SanityLive } from '@/sanity/lib/live';
+
+import ContentWrapper from '@/components/layout/content-wrapper';
 import Navbar from '@/components/layout/navbar';
 
 export default function FrontendLayout({
@@ -10,7 +13,8 @@ export default function FrontendLayout({
   return (
     <>
       <Navbar />
-      {children}
+      <ContentWrapper>{children}</ContentWrapper>
+      <SanityLive />
     </>
   );
 }
