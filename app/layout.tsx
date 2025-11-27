@@ -17,10 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      data-scroll-behavior="smooth">
       <body
         className={`${nephilm.variable} ${plusJakartaSans.variable} ${openSans.variable} relative antialiased`}>
-        <Navbar />
         {children}
       </body>
     </html>

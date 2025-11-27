@@ -105,7 +105,7 @@ export default function Navbar() {
               ref={logoRef}
               href="/"
               onClick={closeMenu}
-              className={`font-nephilm text-2xl transition-colors duration-300 lg:text-3xl ${
+              className={`font-nephilm text-2xl mix-blend-difference transition-colors duration-300 lg:text-3xl ${
                 isTransparent ? 'text-white' : 'text-green-800'
               }`}>
               Betah Holiday
