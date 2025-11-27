@@ -94,9 +94,7 @@ export default function Navbar() {
     <nav
       ref={containerRef}
       className={`fixed top-0 z-50 w-full border-b transition-colors duration-300 ${
-        isTransparent
-          ? 'border-b-transparent bg-transparent'
-          : 'border-b-gray-200 bg-white'
+        isTransparent ? 'border-b-transparent bg-transparent' : 'border-b'
       }`}>
       <Container className="py-4 lg:py-8">
         <div className="flex items-center justify-between">

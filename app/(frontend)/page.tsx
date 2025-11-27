@@ -7,7 +7,7 @@ import PopularActivities from './components/popular-activities';
 
 export default function Home() {
   return (
-    <main className="invisible-until-load">
+    <main>
       <section className="h-screen w-full bg-[url(/home-background.png)] bg-cover bg-center">
         <Container className="space-y-8 pb-20 md:space-y-14">
           <Hero />
