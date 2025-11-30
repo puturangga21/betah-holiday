@@ -1,17 +1,7 @@
-import { defineQuery } from 'next-sanity';
-
 import { sanityFetch } from '@/sanity/lib/live';
+import { QUERY_DESTINATIONS } from '@/sanity/lib/queries';
 
 import DestinationsCarousel from './destinations-carousel';
-
-const QUERY_DESTINATIONS = defineQuery(`
-    *[_type == 'destination'] | order(_createdAt desc) {
-    _id,
-    name,
-    description,
-    "slug": slug.current,
-    image
-  }`);
 
 export default async function Destinations() {
   const { data: destinations } = await sanityFetch({

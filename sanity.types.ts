@@ -228,91 +228,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./app/(frontend)/activity/[slug]/page.tsx
-// Variable: QUERY_ACTIVITY
-// Query: *[_type == "activity" && slug.current == $slug][0] {    _id,    title,    image,    description,    price,    currency,    duration,    meetingPoint,    cancellationPolicy,    highlights,    whatToBring  }
-export type QUERY_ACTIVITYResult = {
-  _id: string;
-  title: string | null;
-  image: Array<{
-    asset?: {
-      _ref: string;
-      _type: 'reference';
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: 'image';
-    _key: string;
-  }> | null;
-  description: string | null;
-  price: number | null;
-  currency: 'AUD' | 'IDR' | 'USD' | null;
-  duration: string | null;
-  meetingPoint: string | null;
-  cancellationPolicy: null;
-  highlights: Array<string> | null;
-  whatToBring: Array<string> | null;
-} | null;
-
-// Source: ./app/(frontend)/components/all-activities.tsx
-// Variable: QUERY_ACTIVITIES
-// Query: *[_type == 'activity'] | order(_createdAt desc) {    _id,    title,    "slug": slug.current,    price,    currency,    description,    "destination": destination->{      name,      "slug": slug.current,      },    "categories": categories[]->{      name      },    "image": image[0]  }
-export type QUERY_ACTIVITIESResult = Array<{
-  _id: string;
-  title: string | null;
-  slug: string | null;
-  price: number | null;
-  currency: 'AUD' | 'IDR' | 'USD' | null;
-  description: string | null;
-  destination: {
-    name: string | null;
-    slug: string | null;
-  } | null;
-  categories: Array<{
-    name: string | null;
-  }> | null;
-  image: {
-    asset?: {
-      _ref: string;
-      _type: 'reference';
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: 'image';
-    _key: string;
-  } | null;
-}>;
-
-// Source: ./app/(frontend)/components/destinations.tsx
-// Variable: QUERY_DESTINATIONS
-// Query: *[_type == 'destination'] | order(_createdAt desc) {    _id,    name,    description,    "slug": slug.current,    image  }
-export type QUERY_DESTINATIONSResult = Array<{
-  _id: string;
-  name: string | null;
-  description: string | null;
-  slug: string | null;
-  image: {
-    asset?: {
-      _ref: string;
-      _type: 'reference';
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: 'image';
-  } | null;
-}>;
-
-// Source: ./app/(frontend)/components/popular-activities.tsx
+// Source: ./sanity/lib/queries.ts
 // Variable: QUERY_POPULAR_ACTIVITIES
 // Query: *[_type == 'activity' && isPopular == true] | order(_createdAt desc) [0...5] {    _id,    title,    "slug": slug.current,    price,    currency,    description,    "destination": destination->{      name,      "slug": slug.current,      },    "categories": categories[]->{      name      },    "image": image[0],  }
 export type QUERY_POPULAR_ACTIVITIESResult = Array<{
@@ -343,12 +259,90 @@ export type QUERY_POPULAR_ACTIVITIESResult = Array<{
     _key: string;
   } | null;
 }>;
+// Variable: QUERY_ALL_ACTIVITIES
+// Query: *[_type == 'activity'] | order(_createdAt desc) {    _id,    title,    "slug": slug.current,    price,    currency,    description,    "destination": destination->{ name, "slug": slug.current },    "categories": categories[]->{ name },    "image": image[0]  }
+export type QUERY_ALL_ACTIVITIESResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  price: number | null;
+  currency: 'AUD' | 'IDR' | 'USD' | null;
+  description: string | null;
+  destination: {
+    name: string | null;
+    slug: string | null;
+  } | null;
+  categories: Array<{
+    name: string | null;
+  }> | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+    _key: string;
+  } | null;
+}>;
+// Variable: QUERY_ACTIVITY_BY_SLUG
+// Query: *[_type == "activity" && slug.current == $slug][0] {    _id,    title,    image,    description,    price,    currency,    duration,    meetingPoint,    cancellationPolicy,    highlights,    whatToBring  }
+export type QUERY_ACTIVITY_BY_SLUGResult = {
+  _id: string;
+  title: string | null;
+  image: Array<{
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+    _key: string;
+  }> | null;
+  description: string | null;
+  price: number | null;
+  currency: 'AUD' | 'IDR' | 'USD' | null;
+  duration: string | null;
+  meetingPoint: string | null;
+  cancellationPolicy: null;
+  highlights: Array<string> | null;
+  whatToBring: Array<string> | null;
+} | null;
+// Variable: QUERY_DESTINATIONS
+// Query: *[_type == 'destination'] | order(_createdAt desc) {    _id,    name,    description,    "slug": slug.current,    image  }
+export type QUERY_DESTINATIONSResult = Array<{
+  _id: string;
+  name: string | null;
+  description: string | null;
+  slug: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: 'image';
+  } | null;
+}>;
 
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "activity" && slug.current == $slug][0] {\n    _id,\n    title,\n    image,\n    description,\n    price,\n    currency,\n    duration,\n    meetingPoint,\n    cancellationPolicy,\n    highlights,\n    whatToBring\n  }\n': QUERY_ACTIVITYResult;
-    '\n    *[_type == \'activity\'] | order(_createdAt desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    currency,\n    description,\n    "destination": destination->{\n      name,\n      "slug": slug.current,\n      },\n    "categories": categories[]->{\n      name\n      },\n    "image": image[0]\n  }': QUERY_ACTIVITIESResult;
-    '\n    *[_type == \'destination\'] | order(_createdAt desc) {\n    _id,\n    name,\n    description,\n    "slug": slug.current,\n    image\n  }': QUERY_DESTINATIONSResult;
     '\n    *[_type == \'activity\' && isPopular == true] | order(_createdAt desc) [0...5] {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    currency,\n    description,\n    "destination": destination->{\n      name,\n      "slug": slug.current,\n      },\n    "categories": categories[]->{\n      name\n      },\n    "image": image[0],\n  }': QUERY_POPULAR_ACTIVITIESResult;
+    '\n    *[_type == \'activity\'] | order(_createdAt desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    currency,\n    description,\n    "destination": destination->{ name, "slug": slug.current },\n    "categories": categories[]->{ name },\n    "image": image[0]\n  }': QUERY_ALL_ACTIVITIESResult;
+    '\n  *[_type == "activity" && slug.current == $slug][0] {\n    _id,\n    title,\n    image,\n    description,\n    price,\n    currency,\n    duration,\n    meetingPoint,\n    cancellationPolicy,\n    highlights,\n    whatToBring\n  }\n': QUERY_ACTIVITY_BY_SLUGResult;
+    '\n    *[_type == \'destination\'] | order(_createdAt desc) {\n    _id,\n    name,\n    description,\n    "slug": slug.current,\n    image\n  }': QUERY_DESTINATIONSResult;
   }
 }
