@@ -7,19 +7,20 @@ import PopularActivities from './components/popular-activities';
 
 export default function Home() {
   return (
-    <main>
-      <section className="h-screen w-full bg-[url(/home-background.png)] bg-cover bg-center">
-        <Container className="space-y-8 pb-20 md:space-y-14">
+    <main className="flex flex-col">
+      <section className="relative h-screen w-full bg-[url(/home-background.png)] bg-cover bg-center">
+        <Container className="relative z-10 h-full">
           <Hero />
+        </Container>
+      </section>
 
-          {/* content */}
-          <div className="space-y-8 md:space-y-14">
-            <PopularActivities />
+      <section className="bg-background w-full py-14">
+        <Container className="space-y-14">
+          <PopularActivities />
 
-            <Destinations />
+          <Destinations />
 
-            <AllActivities />
-          </div>
+          <AllActivities />
         </Container>
       </section>
     </main>

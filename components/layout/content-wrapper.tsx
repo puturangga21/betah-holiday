@@ -13,7 +13,7 @@ export default function ContentWrapper({
   const isHomePage = pathname === '/';
 
   return (
-    <div className={cn('min-h-screen w-full', !isHomePage && 'pt-24 lg:pt-28')}>
+    <div className={cn('w-full flex-1', !isHomePage && 'pt-24 lg:pt-28')}>
       {children}
     </div>
   );

@@ -20,6 +20,7 @@ const navbarLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const isHomePage = pathname === '/';
 
   // Refs for GSAP targeting
@@ -31,7 +32,21 @@ export default function Navbar() {
 
   const closeMenu = () => setIsOpen(false);
 
-  // 1. Setup GSAP Animation
+  useEffect(() => {
+    const handleScroll = () => {
+      const threshold = window.innerHeight - 80;
+      setIsScrolled(window.scrollY > threshold);
+    };
+
+    if (isHomePage) {
+      window.addEventListener('scroll', handleScroll);
+    } else {
+      setIsScrolled(true);
+    }
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isHomePage]);
+
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       tl.current = gsap.timeline({ paused: true });
@@ -75,9 +90,8 @@ export default function Navbar() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isScrolled]);
 
-  // 2. Control Timeline
   useEffect(() => {
     if (tl.current) {
       if (isOpen) {
@@ -88,7 +102,7 @@ export default function Navbar() {
     }
   }, [isOpen]);
 
-  const isTransparent = isHomePage;
+  const isTransparent = isHomePage && !isScrolled;
 
   return (
     <nav

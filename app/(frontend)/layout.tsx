@@ -14,7 +14,7 @@ export default function FrontendLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <NextTopLoader
         color="#006045"
         showSpinner={false}
@@ -24,6 +24,6 @@ export default function FrontendLayout({
       <Navbar />
       <ContentWrapper>{children}</ContentWrapper>
       <Footer />
-    </>
+    </div>
   );
 }
