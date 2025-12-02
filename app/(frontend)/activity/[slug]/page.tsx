@@ -117,10 +117,7 @@ export default async function ActivityPage({ params }: PageProps) {
                     </span>
                   </div>
 
-                  <FormActivity
-                    title={activity.title || ''}
-                    price={activity.price || 0}
-                  />
+                  <FormActivity title={activity.title || ''} />
 
                   <hr />
 

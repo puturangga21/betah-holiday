@@ -19,13 +19,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
-export default function FormActivity({
-  title,
-  price,
-}: {
-  title: string;
-  price: number;
-}) {
+export default function FormActivity({ title }: { title: string }) {
   const [date, setDate] = useState<Date>();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
