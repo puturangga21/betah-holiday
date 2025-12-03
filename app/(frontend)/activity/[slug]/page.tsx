@@ -1,4 +1,6 @@
-import Image from 'next/image';
+import { cache } from 'react';
+
+import { Metadata, ResolvingMetadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { urlFor } from '@/sanity/lib/image';
@@ -19,91 +21,111 @@ import ActivityCard from '@/components/custom/activity-card';
 import Container from '@/components/layout/container';
 
 import FormActivity from './form';
+import Gallery from './gallery';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export default async function ActivityPage({ params }: PageProps) {
-  const { slug } = await params;
-
+const getActivity = cache(async (slug: string) => {
   const { data: activity } = await sanityFetch({
     query: QUERY_ACTIVITY_BY_SLUG,
     params: { slug },
   });
+  return activity;
+});
 
-  const { data: popularActivities } = await sanityFetch({
-    query: QUERY_POPULAR_ACTIVITIES,
-  });
+export async function generateMetadata(
+  { params }: PageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params;
+  const activity = await getActivity(slug);
 
-  if (!activity || !popularActivities) return redirect('/');
+  if (!activity) {
+    return {
+      title: 'Activity Not Found',
+    };
+  }
+
+  const previouseImages = (await parent).openGraph?.images || [];
+  const ogImage = activity.image?.[0]
+    ? urlFor(activity.image[0]).width(1200).height(630).url()
+    : previouseImages[0];
+
+  const priceFormatted = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: activity.currency || 'IDR',
+    maximumFractionDigits: 0,
+  }).format(activity.price ?? 0);
+
+  return {
+    title: `${activity.title} - Book Online | Betah Holiday`,
+    description: `Book ${activity.title}. Duration: ${activity.duration}. Price starts from ${priceFormatted}. ${activity.description?.slice(0, 100)}...`,
+    openGraph: {
+      title: activity.title || '',
+      description: `Book ${activity.title} - Best Price Guarantee.`,
+      images: [ogImage as string],
+      type: 'website',
+    },
+  };
+}
+
+export default async function ActivityPage({ params }: PageProps) {
+  const { slug } = await params;
+
+  const activityData = getActivity(slug);
+  const popularData = await sanityFetch({ query: QUERY_POPULAR_ACTIVITIES });
+
+  const [activity, { data: popularActivities }] = await Promise.all([
+    activityData,
+    popularData,
+  ]);
+
+  if (!activity) return redirect('/');
+
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: activity.title,
+    image: activity.image?.[0] ? urlFor(activity.image[0]).url() : undefined,
+    description: activity.description,
+    brand: {
+      '@type': 'Brand',
+      name: 'Betah Holiday',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://betahholiday.com/activity/${slug}`, // Ganti domain
+      priceCurrency: activity.currency || 'IDR',
+      price: activity.price,
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+    },
+  };
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+
       <section className="mt-4 lg:mt-14">
-        <Container className="space-y-8 pb-20 md:space-y-14">
+        <Container className="space-y-8 pb-20 lg:space-y-14">
           <div className="flex flex-col gap-6">
             <h1 className="text-4xl font-bold">{activity.title}</h1>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-8">
               {/* gambar */}
-              <div className="col-span-1 lg:col-span-5">
-                <div className="flex h-[400px] w-full flex-col gap-4 lg:flex-row">
-                  <div className="relative h-full w-full overflow-hidden rounded-2xl lg:w-[60%]">
-                    {activity.image?.[0] && (
-                      <Image
-                        src={urlFor(activity.image[0])
-                          .width(800)
-                          .height(600)
-                          .url()}
-                        alt={activity.title || 'Activity Image'}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 60vw"
-                        className="object-cover"
-                        priority
-                      />
-                    )}
-                  </div>
 
-                  {/* Kolom Gambar Samping */}
-                  <div className="flex h-full w-full flex-row gap-4 lg:w-[40%] lg:flex-col">
-                    {/* Gambar Samping Atas */}
-                    <div className="relative h-full w-full overflow-hidden rounded-2xl lg:h-1/2">
-                      {activity.image?.[1] && (
-                        <Image
-                          src={urlFor(activity.image[1])
-                            .width(400)
-                            .height(300)
-                            .url()}
-                          alt={activity.title || 'Activity Detail 1'}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 40vw"
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-
-                    {/* Gambar Samping Bawah */}
-                    <div className="relative h-full w-full overflow-hidden rounded-2xl lg:h-1/2">
-                      {activity.image?.[2] && (
-                        <Image
-                          src={urlFor(activity.image[2])
-                            .width(400)
-                            .height(300)
-                            .url()}
-                          alt={activity.title || 'Activity Detail 2'}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 40vw"
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Gallery
+                images={activity.image || []}
+                title={activity.title || ''}
+              />
 
               {/* form */}
-              <div className="col-span-1 lg:col-span-3">
+              <div className="col-span-1 md:col-span-3">
                 <div className="flex flex-col gap-4 rounded-xl border px-5 py-7">
                   <div className="flex flex-col">
                     <span className="text-muted-foreground text-sm">From</span>
@@ -158,13 +180,17 @@ export default async function ActivityPage({ params }: PageProps) {
             </div>
 
             {/* description */}
-            <p className="w-full text-base font-normal lg:max-w-[60%]">
+            <p className="w-full text-base font-normal md:max-w-[60%]">
               Begin with rafting on the Telaga Waja River, followed by
               relaxation at Bali Green SPA, where you can enjoy a traditional
               Balinese massage after your adventure. Afterward, you can also
               shop for Balinese souvenirs at the Krisna shopping center. For
               more details, visit the official Telaga Waja Rafting Tour page.
             </p>
+
+            {/* <p className="w-full text-base font-normal xl:max-w-[60%]">
+              {activity.description}
+            </p> */}
 
             <div className="flex flex-col gap-4">
               <span className="text-base font-bold">About this activity</span>
@@ -233,9 +259,9 @@ export default async function ActivityPage({ params }: PageProps) {
 
             <hr />
 
-            <div className="flex w-full flex-col gap-6 lg:max-w-[60%]">
-              <div className="flex w-full flex-col items-start gap-4 lg:flex-row lg:gap-24">
-                <span className="w-full text-base font-bold lg:w-[150px]">
+            <div className="flex w-full flex-col gap-6 md:max-w-[60%]">
+              <div className="flex w-full flex-col items-start gap-4 md:flex-row md:gap-24">
+                <span className="w-full text-base font-bold md:w-[150px]">
                   Highlights
                 </span>
 
@@ -253,8 +279,8 @@ export default async function ActivityPage({ params }: PageProps) {
 
               <hr />
 
-              <div className="flex w-full flex-col items-start gap-4 lg:flex-row lg:gap-24">
-                <span className="w-full text-base font-bold lg:w-[150px]">
+              <div className="flex w-full flex-col items-start gap-4 md:flex-row md:gap-24">
+                <span className="w-full text-base font-bold md:w-[150px]">
                   Important Information
                 </span>
 
@@ -280,7 +306,7 @@ export default async function ActivityPage({ params }: PageProps) {
               You might also like...
             </h1>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
               {popularActivities.map((item) => (
                 <ActivityCard
                   data={item}
