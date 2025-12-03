@@ -6,6 +6,7 @@ import ActivityCard from '@/components/custom/activity-card';
 export default async function AllActivities() {
   const { data: activities } = await sanityFetch({
     query: QUERY_ALL_ACTIVITIES,
+    params: { category: null },
   });
 
   return (

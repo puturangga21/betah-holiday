@@ -12,8 +12,8 @@ import Container from '@/components/layout/container';
 
 const navbarLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Place to see', href: '#destinations' },
-  { label: 'Things to do', href: '#activities' },
+  { label: 'Place to see', href: '/#destinations' },
+  { label: 'Things to do', href: '/activity' },
   { label: 'Contact', href: '#contact' },
 ];
 

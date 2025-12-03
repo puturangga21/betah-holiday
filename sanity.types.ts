@@ -260,7 +260,7 @@ export type QUERY_POPULAR_ACTIVITIESResult = Array<{
   } | null;
 }>;
 // Variable: QUERY_ALL_ACTIVITIES
-// Query: *[_type == 'activity'] | order(_createdAt desc) {    _id,    title,    "slug": slug.current,    price,    currency,    description,    "destination": destination->{ name, "slug": slug.current },    "categories": categories[]->{ name },    "image": image[0]  }
+// Query: *[_type == 'activity' &&    (!defined($category) || $category in categories[]->slug.current)]     | order(_createdAt desc) {    _id,    title,    "slug": slug.current,    price,    currency,    description,    "destination": destination->{ name, "slug": slug.current },    "categories": categories[]->{ name, "slug": slug.current },    "image": image[0]  }
 export type QUERY_ALL_ACTIVITIESResult = Array<{
   _id: string;
   title: string | null;
@@ -274,6 +274,7 @@ export type QUERY_ALL_ACTIVITIESResult = Array<{
   } | null;
   categories: Array<{
     name: string | null;
+    slug: string | null;
   }> | null;
   image: {
     asset?: {
@@ -337,12 +338,52 @@ export type QUERY_DESTINATIONSResult = Array<{
     _type: 'image';
   } | null;
 }>;
+// Variable: QUERY_ACTIVITY_BY_DESTINATION
+// Query: *[_type == 'activity' &&   destination->slug.current == $slug &&  (!defined($category) || $category in categories[]->slug.current)  ] | order(_createdAt desc) {  _id,  title,  "slug": slug.current,  price,  currency,  description,  "image": image[0],  "destination": destination->{ name, "slug": slug.current },  "categories": categories[]->{ name, "slug": slug.current }}
+export type QUERY_ACTIVITY_BY_DESTINATIONResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: string | null;
+  price: number | null;
+  currency: 'AUD' | 'IDR' | 'USD' | null;
+  description: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+    _key: string;
+  } | null;
+  destination: {
+    name: string | null;
+    slug: string | null;
+  } | null;
+  categories: Array<{
+    name: string | null;
+    slug: string | null;
+  }> | null;
+}>;
+// Variable: QUERY_CATEGORIES
+// Query: *[_type == 'category'] {  _id,  name,  "slug": slug.current}
+export type QUERY_CATEGORIESResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+}>;
 
 declare module '@sanity/client' {
   interface SanityQueries {
     '\n    *[_type == \'activity\' && isPopular == true] | order(_createdAt desc) [0...5] {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    currency,\n    description,\n    "destination": destination->{\n      name,\n      "slug": slug.current,\n      },\n    "categories": categories[]->{\n      name\n      },\n    "image": image[0],\n  }': QUERY_POPULAR_ACTIVITIESResult;
-    '\n    *[_type == \'activity\'] | order(_createdAt desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    currency,\n    description,\n    "destination": destination->{ name, "slug": slug.current },\n    "categories": categories[]->{ name },\n    "image": image[0]\n  }': QUERY_ALL_ACTIVITIESResult;
+    '\n    *[_type == \'activity\' &&\n    (!defined($category) || $category in categories[]->slug.current)] \n    | order(_createdAt desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    price,\n    currency,\n    description,\n    "destination": destination->{ name, "slug": slug.current },\n    "categories": categories[]->{ name, "slug": slug.current },\n    "image": image[0]\n  }': QUERY_ALL_ACTIVITIESResult;
     '\n  *[_type == "activity" && slug.current == $slug][0] {\n    _id,\n    title,\n    image,\n    description,\n    price,\n    currency,\n    duration,\n    meetingPoint,\n    cancellationPolicy,\n    highlights,\n    whatToBring\n  }\n': QUERY_ACTIVITY_BY_SLUGResult;
     '\n    *[_type == \'destination\'] | order(_createdAt desc) {\n    _id,\n    name,\n    description,\n    "slug": slug.current,\n    image\n  }': QUERY_DESTINATIONSResult;
+    '\n  *[_type == \'activity\' && \n  destination->slug.current == $slug &&\n  (!defined($category) || $category in categories[]->slug.current)\n  ] | order(_createdAt desc) {\n  _id,\n  title,\n  "slug": slug.current,\n  price,\n  currency,\n  description,\n  "image": image[0],\n  "destination": destination->{ name, "slug": slug.current },\n  "categories": categories[]->{ name, "slug": slug.current }\n}': QUERY_ACTIVITY_BY_DESTINATIONResult;
+    '\n  *[_type == \'category\'] {\n  _id,\n  name,\n  "slug": slug.current\n}': QUERY_CATEGORIESResult;
   }
 }

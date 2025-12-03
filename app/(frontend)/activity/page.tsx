@@ -1,43 +1,36 @@
-import { cache } from 'react';
+import React, { cache } from 'react';
 
 import { Metadata } from 'next';
 import Link from 'next/link';
 
 import { cn, formatSlugToTitle } from '@/lib/utils';
 import { sanityFetch } from '@/sanity/lib/live';
-import {
-  QUERY_ACTIVITY_BY_DESTINATION,
-  QUERY_CATEGORIES,
-} from '@/sanity/lib/queries';
+import { QUERY_ALL_ACTIVITIES, QUERY_CATEGORIES } from '@/sanity/lib/queries';
 
 import ActivityCard from '@/components/custom/activity-card';
 import Container from '@/components/layout/container';
 
-import Destinations from '../../components/destinations';
+import Destinations from '../components/destinations';
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
   searchParams: Promise<{ category: string }>;
 };
 
-const getActivity = cache(async (slug: string, category: string) => {
+const getActivity = cache(async (category: string) => {
   const { data: activities } = await sanityFetch({
-    query: QUERY_ACTIVITY_BY_DESTINATION,
-    params: { slug, category: category ?? null },
+    query: QUERY_ALL_ACTIVITIES,
+    params: { category: category || null },
   });
   return activities;
 });
 
 export async function generateMetadata({
-  params,
   searchParams,
 }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
   const { category } = await searchParams;
+  const activities = await getActivity(category);
 
-  const activities = await getActivity(slug, category);
-
-  const locationContext = formatSlugToTitle(slug);
+  const locationContext = 'Bali';
   const brandName = 'Betah Holiday';
 
   const title = category
@@ -45,14 +38,13 @@ export async function generateMetadata({
     : `Best Things to Do in ${locationContext} - All Activities | ${brandName}`;
 
   const description = category
-    ? `Book the best ${formatSlugToTitle(category)} experiences in ${locationContext}. verified tours, best prices. Plan your ${formatSlugToTitle(category)} trip with ${brandName}.`
-    : `Discover ${activities.length}+ curated activities and tours in ${locationContext}. From adventure to relaxation, find your perfect holiday with ${brandName}.`;
+    ? `Browse ${activities.length} best ${formatSlugToTitle(category)} experiences in ${locationContext}. Book your tickets now with ${brandName}.`
+    : `Discover ${activities.length} curated activities and tours in ${locationContext}. From adventure to relaxation, find your perfect holiday with ${brandName}.`;
 
   return {
     title,
     description,
     keywords: [
-      locationContext,
       'activities',
       'tours',
       'adventure',
@@ -69,15 +61,15 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params, searchParams }: PageProps) {
-  const { slug } = await params;
+export default async function Page({ searchParams }: PageProps) {
   const { category } = await searchParams;
 
   const { data: categories } = await sanityFetch({
     query: QUERY_CATEGORIES,
   });
 
-  const activities = await getActivity(slug, category);
+  const activities = await getActivity(category);
+
   return (
     <main>
       <section className="mt-6">
@@ -86,20 +78,19 @@ export default async function Page({ params, searchParams }: PageProps) {
             <div>
               <h1 className="text-3xl font-bold tracking-tight">
                 {category
-                  ? `${formatSlugToTitle(category)} in ${formatSlugToTitle(slug)}`
-                  : 'Explore activity in ' + formatSlugToTitle(slug)}
+                  ? `${formatSlugToTitle(category)} Activities`
+                  : 'All Holiday Activities'}
               </h1>
               <p className="text-muted-foreground mt-2 text-lg">
                 {category
-                  ? `Explore our selection of ${formatSlugToTitle(category)} activities in ${formatSlugToTitle(slug)}`
-                  : `Find the best activities and tours in ${formatSlugToTitle(slug)}`}
+                  ? `Explore our selection of ${formatSlugToTitle(category)} tours and experiences.`
+                  : 'Find the best tours, attractions, and things to do for your trip.'}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-2">
               <Link
-                href={`/destination/${slug}`}
-                scroll={false}
+                href={`/activity`}
                 className={cn(
                   'rounded-full px-4 py-2 text-sm font-semibold transition-colors',
                   !category
@@ -114,7 +105,7 @@ export default async function Page({ params, searchParams }: PageProps) {
                 return (
                   <Link
                     key={cat._id}
-                    href={`/destination/${slug}?category=${cat.slug}`}
+                    href={`/activity?category=${cat.slug}`}
                     className={cn(
                       'rounded-full px-4 py-2 text-sm font-semibold transition-colors',
                       isActive
@@ -128,11 +119,11 @@ export default async function Page({ params, searchParams }: PageProps) {
             </div>
 
             <div className="flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-foreground text-sm font-medium">
-                  Showing {activities.length} results
-                </span>
-              </div>
+              <span className="text-foreground text-sm font-medium">
+                Showing {activities.length} result
+                {activities.length !== 1 && 's'}
+                {category && ` for ${formatSlugToTitle(category)}`}
+              </span>
 
               {activities.length > 0 ? (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3 xl:grid-cols-4">
@@ -144,19 +135,14 @@ export default async function Page({ params, searchParams }: PageProps) {
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center rounded-lg border bg-gray-50/50 py-16 text-center">
-                  <p className="text-lg font-semibold text-gray-900">
-                    No {category ? formatSlugToTitle(category) : ''} activities
-                    found.
-                  </p>
-                  <p className="mx-auto mt-1 max-w-xs text-sm text-gray-500">
-                    We currently don&apos;t have this specific category in{' '}
-                    {formatSlugToTitle(slug)}, try browsing all activities.
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                  <p className="text-lg font-semibold text-gray-600">
+                    No activities found for {formatSlugToTitle(category)}.
                   </p>
                   <Link
-                    href={`/destination/${slug}`}
-                    className="text-primary mt-4 font-medium hover:underline">
-                    View all activities in {formatSlugToTitle(slug)}
+                    href="/activity"
+                    className="text-primary mt-2 hover:underline">
+                    Clear filters
                   </Link>
                 </div>
               )}

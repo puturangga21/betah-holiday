@@ -19,7 +19,9 @@ export const QUERY_POPULAR_ACTIVITIES = defineQuery(`
   }`);
 
 export const QUERY_ALL_ACTIVITIES = defineQuery(`
-    *[_type == 'activity'] | order(_createdAt desc) {
+    *[_type == 'activity' &&
+    (!defined($category) || $category in categories[]->slug.current)] 
+    | order(_createdAt desc) {
     _id,
     title,
     "slug": slug.current,
@@ -27,7 +29,7 @@ export const QUERY_ALL_ACTIVITIES = defineQuery(`
     currency,
     description,
     "destination": destination->{ name, "slug": slug.current },
-    "categories": categories[]->{ name },
+    "categories": categories[]->{ name, "slug": slug.current },
     "image": image[0]
   }`);
 
@@ -55,3 +57,26 @@ export const QUERY_DESTINATIONS = defineQuery(`
     "slug": slug.current,
     image
   }`);
+
+export const QUERY_ACTIVITY_BY_DESTINATION = defineQuery(`
+  *[_type == 'activity' && 
+  destination->slug.current == $slug &&
+  (!defined($category) || $category in categories[]->slug.current)
+  ] | order(_createdAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  price,
+  currency,
+  description,
+  "image": image[0],
+  "destination": destination->{ name, "slug": slug.current },
+  "categories": categories[]->{ name, "slug": slug.current }
+}`);
+
+export const QUERY_CATEGORIES = defineQuery(`
+  *[_type == 'category'] {
+  _id,
+  name,
+  "slug": slug.current
+}`);
